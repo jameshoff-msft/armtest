@@ -27,6 +27,11 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./templates/formrec.json
         parameters: resourceGroupId=${{ secrets.AZURE_RG_ID }} name=${{ secrets.BPA_PROJECTNAME }}
+        output: ${{ formrecOutput }}
+
+    - name: echo
+        run: echo ${{ formrecOutput }}
+        id: random-color-generator
 
     #   # Deploy Bicep file
     # - name: deploy
