@@ -20,5 +20,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./templates/main.bicep
-        parameters: location=eastus projectName=${{ secrets.BPA_PROJECTNAME }} repositoryUrl=${{ secrets.BPA_FRONTEND_REPOSITORYURL }} repositoryToken=${{ secrets.BPA_REPOSITORYTOKEN }}
+        parameters: location=eastus projectName=${{ secrets.BPA_PROJECTNAME }} repositoryUrl=${{ secrets.BPA_FRONTEND_REPOSITORYURL }} repositoryToken=${{ secrets.BPA_FRONTEND_REPOSITORYTOKEN }}
         failOnStdErr: false
