@@ -1,7 +1,10 @@
 param location string
 param projectName string 
-// param repositoryToken string
-// param repositoryUrl string
+param repositoryToken string
+param repositoryUrl string
+
+param webappLocation string = 'eastus2'
+
 // param formrecApiKey string
 // param formrecEndpoint string
 //param branch string = 'main'
@@ -15,7 +18,7 @@ param functionAppName string = projectName
 param applicationInsightsName string = 'appinsights${projectName}'
 param cogServicesName string = 'cogservices${projectName}'
 param languageServicesName string = 'language${projectName}'
-//param webAppName string = toLower('webapp${projectName}')
+param webAppName string = toLower('webapp${projectName}')
 
 
 // cosmos db names
@@ -353,36 +356,36 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
 }
 
 
-// resource staticWebApp 'Microsoft.Web/staticSites@2020-12-01' = {
-//   name: webAppName
-//   location: 'eastus2'
-//   sku: {
-//     name: 'Standard'
-//     tier: 'Standard'
-//   }
-//   properties: {
-//     // The provider, repositoryUrl and branch fields are required for successive deployments to succeed
-//     // for more details see: https://github.com/Azure/static-web-apps/issues/516
-//     provider: 'GitHub'
-//     repositoryUrl: repositoryUrl
-//     repositoryToken: repositoryToken
-//     branch: branch
-//     buildProperties: {
-//       apiLocation: 'api'
-//     }
-//   }
-// }
+resource staticWebApp 'Microsoft.Web/staticSites@2020-12-01' = {
+  name: webAppName
+  location: webappLocation
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
+  properties: {
+    // The provider, repositoryUrl and branch fields are required for successive deployments to succeed
+    // for more details see: https://github.com/Azure/static-web-apps/issues/516
+    provider: 'GitHub'
+    repositoryUrl: repositoryUrl
+    repositoryToken: repositoryToken
+    branch: 'main'
+    buildProperties: {
+      apiLocation: 'api'
+    }
+  }
+}
 
-// resource staticWebAppSettings 'Microsoft.Web/staticSites/config@2021-03-01' = {
-//   name: 'appsettings'
-//   kind: 'staticWebAppSettings'
-//   parent: staticWebApp
+resource staticWebAppSettings 'Microsoft.Web/staticSites/config@2021-03-01' = {
+  name: 'appsettings'
+  kind: 'staticWebAppSettings'
+  parent: staticWebApp
   
-//   properties: {
-//       'COSMOS_DB_CONNECTION_STRING' : 'AccountEndpoint=https://${cosmosdbAccountName}.documents.azure.com:443/;AccountKey=${listKeys(accountName_resource.id, accountName_resource.apiVersion).primaryMasterKey};'
-//       'COSMOS_DB_DB' : cosmosDbName
-//       'COSMOS_DB_CONTAINER' : cosmosContainerName
-//       'BLOB_STORAGE_CONNECTION_STRING' : 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
-//       'BLOB_STORAGE_CONTAINER' : blobContainer.name
-//   }
-// }
+  properties: {
+      'COSMOS_DB_CONNECTION_STRING' : 'AccountEndpoint=https://${cosmosdbAccountName}.documents.azure.com:443/;AccountKey=${listKeys(accountName_resource.id, accountName_resource.apiVersion).primaryMasterKey};'
+      'COSMOS_DB_DB' : cosmosDbName
+      'COSMOS_DB_CONTAINER' : cosmosContainerName
+      'BLOB_STORAGE_CONNECTION_STRING' : 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+      'BLOB_STORAGE_CONTAINER' : blobContainer.name
+  }
+}
