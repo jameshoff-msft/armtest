@@ -2,11 +2,11 @@ param location string
 param projectName string 
 param repositoryToken string
 param repositoryUrl string
+param formrecApiKey string
+param formrecEndpoint string
 
 param webappLocation string = 'eastus2'
 
-// param formrecApiKey string
-// param formrecEndpoint string
 //param branch string = 'main'
 
 param cosmosDbName string = projectName
