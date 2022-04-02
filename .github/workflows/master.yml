@@ -30,7 +30,7 @@ jobs:
         parameters: location=eastus projectName=${{ secrets.BPA_PROJECTNAME }} repositoryUrl=${{ secrets.BPA_FRONTEND_REPOSITORYURL }} repositoryToken=${{ secrets.BPA_FRONTEND_REPOSITORYTOKEN }}
         failOnStdErr: false
 
-  build-and-deploy:
+  build-and-deploy2:
     runs-on: windows-latest
     steps:
     - name: 'Checkout GitHub Action'
