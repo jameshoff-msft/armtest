@@ -26,6 +26,7 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./templates/formrec.json
+        parameters: resourceGroupId=${{ secrets.AZURE_RG_ID }} name=${{ secrets.BPA_PROJECTNAME }}
 
     #   # Deploy Bicep file
     # - name: deploy
