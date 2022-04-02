@@ -30,7 +30,7 @@ jobs:
         output: ${{ formrecOutput }}
 
     - name: echo
-        run: echo ${{ formrecOutput }}
+        run: echo "{formrecOutput}"
         id: random-color-generator
 
     #   # Deploy Bicep file
