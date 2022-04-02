@@ -366,7 +366,7 @@ resource staticWebApp 'Microsoft.Web/staticSites@2020-12-01' = {
   properties: {
     // The provider, repositoryUrl and branch fields are required for successive deployments to succeed
     // for more details see: https://github.com/Azure/static-web-apps/issues/516
-    //provider: 'GitHub'
+    provider: 'GitHub'
     repositoryUrl: repositoryUrl
     repositoryToken: repositoryToken
     branch: 'main'
