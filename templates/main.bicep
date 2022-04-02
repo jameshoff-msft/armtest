@@ -1,10 +1,10 @@
 param location string
 param projectName string 
-param repositoryToken string
-param repositoryUrl string
-param formrecApiKey string
-param formrecEndpoint string
-param branch string = 'main'
+// param repositoryToken string
+// param repositoryUrl string
+// param formrecApiKey string
+// param formrecEndpoint string
+//param branch string = 'main'
 
 param cosmosDbName string = projectName
 param cosmosContainerName string = projectName
@@ -313,14 +313,14 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
           'name': 'LANGUAGE_STUDIO_PROJECT'
           'value': 'airangerscner4' //languageStudioProjectName
         }
-        {
-          'name': 'FORMREC_APIKEY'
-          'value': formrecApiKey
-        }
-        {
-          'name': 'FORMREC_ENDPOINT'
-          'value': formrecEndpoint
-        }
+        // {
+        //   'name': 'FORMREC_APIKEY'
+        //   'value': formrecApiKey
+        // }
+        // {
+        //   'name': 'FORMREC_ENDPOINT'
+        //   'value': formrecEndpoint
+        // }
         {
           'name': 'SPEECH_SUB_KEY'
           'value': listKeys(cogServicesAccount.id, cogServicesAccount.apiVersion).key1
