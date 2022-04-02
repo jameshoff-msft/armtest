@@ -20,5 +20,6 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./templates/main.bicep
-        parameters: location=eastus , projectName=${{ secrets.BPA_PROJECTNAME }}
+        parameters: location=eastus 
+        parameters: projectName=${{ secrets.BPA_PROJECTNAME }}
         failOnStdErr: false
