@@ -199,8 +199,6 @@ resource cogServicesAccount 'Microsoft.CognitiveServices/accounts@2021-10-01' = 
   }
 }
 
-
-
 resource languageServicesAccount 'Microsoft.CognitiveServices/accounts@2021-10-01' = {
   name: languageServicesName
   location: languageServicesLocation
@@ -212,10 +210,6 @@ resource languageServicesAccount 'Microsoft.CognitiveServices/accounts@2021-10-0
 
   }
 }
-
-
-
-////////////////////////////////////
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-10-01' = {
   name: hostingPlanName
@@ -344,8 +338,6 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
           'name' : 'TRANSLATE_ENDPOINT'
           'value' : 'https://api.cognitive.microsofttranslator.com/'
         }
-        // WEBSITE_CONTENTSHARE will also be auto-generated - https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings#website_contentshare
-        // WEBSITE_RUN_FROM_PACKAGE will be set to 1 by func azure functionapp publish
       ]
     }
   }
