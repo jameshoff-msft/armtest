@@ -27,7 +27,6 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./templates/formrec.json
         parameters: resourceGroupId=${{ secrets.AZURE_RG_ID }} name=${{ secrets.BPA_PROJECTNAME }}
-        output: ${{ formrecOutput }}
 
     - run: echo ${{ steps.deploy.outputs.formreckey }}
 
