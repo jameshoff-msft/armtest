@@ -28,7 +28,7 @@ param primaryRegion string = location
 
 //language services
 param languageServicesLocation string = 'westus2' //fixed...not available everywhere
-param languageStudioProjectName string = projectName
+//param languageStudioProjectName string = projectName
 
 
 @allowed([
