@@ -243,13 +243,13 @@ resource functionAppPython 'Microsoft.Web/sites@2020-06-01' = {
   name: functionAppNamePython
   location: location
   kind: 'functionapp'
-  
   properties: {
     httpsOnly: true
     serverFarmId: hostingPlan.id
     clientAffinityEnabled: true
     siteConfig: {
-      pythonVersion: '3.7'
+      linuxFxVersion: 'Python|3.9'
+      alwaysOn: true
       appSettings: [
         {
           'name': 'APPINSIGHTS_INSTRUMENTATIONKEY'
