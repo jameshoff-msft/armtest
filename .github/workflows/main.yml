@@ -4,6 +4,7 @@ env:
   AZURE_FUNCTIONAPP_NAME: ${{ secrets.BPA_PROJECTNAME }}    # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'                     # set this to the node version to use (supports 8.x, 10.x, 12.x)
+  AZURE_FUNCTIONAPP_PYTHON_PACKAGE_PATH: './huggingface'
 
 name: Azure ARM
 jobs:
@@ -28,8 +29,6 @@ jobs:
         template: ./templates/formrec.json
         parameters: resourceGroupId=${{ secrets.AZURE_RG_ID }} name=${{ secrets.BPA_PROJECTNAME }}
 
-    - run: echo ${{ steps.formrec-deploy.outputs.formreckey }}
-
     # Deploy Bicep file
     - name: deploy
       uses: azure/arm-deploy@v1
@@ -39,6 +38,19 @@ jobs:
         template: ./templates/main.bicep
         parameters: location=eastus projectName=${{ secrets.BPA_PROJECTNAME }} repositoryUrl=${{ secrets.BPA_FRONTEND_REPOSITORYURL }} repositoryToken=${{ secrets.BPA_FRONTEND_REPOSITORYTOKEN }} formrecApiKey=${{ steps.formrec-deploy.outputs.formreckey }} formrecEndpoint=${{ steps.formrec-deploy.outputs.formrecendpoint }}
         failOnStdErr: false
+
+    - name: Setup Python 3.9 Environment
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+
+    - name: 'Resolve Project Dependencies Using Pip'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        popd
 
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v2
@@ -51,11 +63,12 @@ jobs:
     - name: 'Resolve Project Dependencies Using Npm'
       shell: pwsh
       run: |
-        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        pushd './${{ env.AZURE_FUNCTIONAPP_PYTHON_PACKAGE_PATH }}'
         npm install
         npm run build --if-present
         npm run test --if-present
         popd
+        
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1
       id: fa
