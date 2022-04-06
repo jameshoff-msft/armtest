@@ -218,9 +218,13 @@ resource languageServicesAccount 'Microsoft.CognitiveServices/accounts@2021-10-0
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-10-01' = {
   name: hostingPlanName
   location: location
+  kind: 'linux'
   sku: {
     name: 'B1' 
     tier: 'Basic'
+  }
+  properties: {
+    reserved: true
   }
 }
 
