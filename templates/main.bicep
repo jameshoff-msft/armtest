@@ -12,6 +12,7 @@ param storageAccountName string = projectName
 param cosmosdbAccountName string = projectName
 param hostingPlanName string = projectName
 param functionAppName string = projectName
+param functionAppNamePython string = 'huggingface'
 param applicationInsightsName string = 'appinsights${projectName}'
 param cogServicesName string = 'cogservices${projectName}'
 param languageServicesName string = 'language${projectName}'
@@ -232,6 +233,58 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
   }
+}
+
+resource functionAppPython 'Microsoft.Web/sites@2020-06-01' = {
+  name: functionAppNamePython
+  location: location
+  kind: 'functionapp'
+  
+  properties: {
+    httpsOnly: true
+    serverFarmId: hostingPlan.id
+    clientAffinityEnabled: true
+    siteConfig: {
+      appSettings: [
+        {
+          'name': 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          'value': appInsights.properties.InstrumentationKey
+        }
+        {
+          name: 'AzureWebJobsStorage'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+        }
+        {
+          'name': 'FUNCTIONS_EXTENSION_VERSION'
+          'value': '~4'
+        }
+        {
+          'name': 'BUILD_FLAGS'
+          'value': 'UseExpressBuild'
+        }
+        {
+          'name': 'ENABLE_ORYX_BUILD'
+          'value': 'true'
+        }
+        {
+          'name': 'FUNCTIONS_WORKER_RUNTIME'
+          'value': 'python'
+        }
+        {
+          'name': 'SCM_DO_BUILD_DURING_DEPLOYMENT'
+          'value': '1'
+        }
+        {
+          'name': 'XDG_CACHE_HOME'
+          'value': '/tmp/.cache'
+        }
+      ]
+    }
+  }
+
+  dependsOn: [
+
+  ]
 }
 
 resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
