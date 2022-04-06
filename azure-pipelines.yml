@@ -12,8 +12,8 @@ variables:
   azureSubscription: ''
   projectName: ''
   resourceGroupName: ''
-  location: ''
-  repositoryUrl: ''
+  location: 'eastus'
+  repositoryUrl: 'https://github.com/<>/bpa-engine-frontend'
   repositoryToken: ''
 
   functionAppName: '$(projectName)'
