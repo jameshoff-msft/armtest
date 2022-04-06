@@ -40,10 +40,10 @@ jobs:
         parameters: location=eastus projectName=${{ secrets.BPA_PROJECTNAME }} repositoryUrl=${{ secrets.BPA_FRONTEND_REPOSITORYURL }} repositoryToken=${{ secrets.BPA_FRONTEND_REPOSITORYTOKEN }} formrecApiKey=${{ steps.formrec-deploy.outputs.formreckey }} formrecEndpoint=${{ steps.formrec-deploy.outputs.formrecendpoint }}
         failOnStdErr: false
 
-    - name: Setup Python 3.9 Environment
+    - name: Setup Python 3.7 Environment
       uses: actions/setup-python@v1
       with:
-        python-version: 3.9
+        python-version: 3.7
 
     - name: 'Resolve Project Dependencies Using Pip'
       shell: bash

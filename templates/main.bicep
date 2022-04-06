@@ -249,7 +249,7 @@ resource functionAppPython 'Microsoft.Web/sites@2020-06-01' = {
     serverFarmId: hostingPlan.id
     clientAffinityEnabled: true
     siteConfig: {
-      pythonVersion: '3.9'
+      pythonVersion: '3.7'
       appSettings: [
         {
           'name': 'APPINSIGHTS_INSTRUMENTATIONKEY'
